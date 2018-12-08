@@ -69,7 +69,7 @@ function newInterval() {
   }
 }
 
-// imagesInterval = setInterval(newInterval, 90);
+imagesInterval = setInterval(newInterval, 90);
 
 function stopTrex() {
   clearInterval(imagesInterval);
