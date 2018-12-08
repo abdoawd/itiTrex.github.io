@@ -119,11 +119,12 @@ function startGame() {
   score = document.getElementById("score");
   socreCounter = 0;
   counter();
-  birdTimeout = setTimeout(moveBird,7000);
+  
+  birdTimeout = setTimeout(moveBird,getRandom());
   obstecleMove(obstecle1);
   repeat();
   startBtn.css({ "display": "none" });
-  road.style.animation = "move 10s linear infinite";
+  road.style.animation = "move 3s linear infinite";
 }
 
 //replay game button
@@ -132,6 +133,11 @@ function replay() {
   imagesInterval = setInterval(newInterval, 90);
   replayBtn.fadeOut();
 
+}
+function getRandom ()
+{
+  var number = Math.random*10 +5000;
+  return number;
 }
 function counter() {
 
@@ -247,8 +253,8 @@ function collision($div1, $div2) {
   var r1 = x1 + w1;
   var x2 = $div2.offset().left - 20;
   var y2 = $div2.offset().top - 20;
-  var h2 = $div2.outerHeight(true) - 10;
-  var w2 = $div2.outerWidth(true) - 10;
+  var h2 = $div2.outerHeight(true) - 20;
+  var w2 = $div2.outerWidth(true) - 20;
   var b2 = y2 + h2;
   var r2 = x2 + w2;
 
