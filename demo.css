@@ -1,0 +1,33 @@
+#container{
+    margin: 30px;
+}
+
+#header{
+    text-align: center;
+    color: 	#535353;
+    font-size: 3em;
+}
+#describtion_paragraph
+{
+    margin-top: 20px;
+    margin: 0 auto ;
+    text-align: center;
+    display: inline ;
+}
+#h3_desc
+{
+    display: inline ;
+
+}
+#des_div
+{
+    margin-top: 20px;
+    text-align: center;
+    display: block;
+}
+#demoVideo{
+    height: 500px;
+    width: 700px;
+    margin-left: 24%;
+
+}

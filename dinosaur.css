@@ -1,0 +1,19 @@
+body{
+    
+    position: relative;
+}
+
+#containerDiv {
+
+    margin: 0px;
+    padding: 0px;
+}
+
+#tRexImg {
+
+    width: 60%;
+    height: 200px;
+    margin: 30px auto;
+    display:flex;
+    text-align: center;
+}
