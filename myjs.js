@@ -6,6 +6,7 @@ var replayBtn = $("#replayBtn");
 var road = document.getElementById("line");
 var controller, TRex, loop;
 var TRexImgs = ["trex1.png", "trex2.png"];
+var isMOving =true;
 //var bird =$("#bird");
 var audio;
 var socreCounter = 0;
@@ -27,6 +28,7 @@ $(function () {
   replayBtn.css({ top: '200px' });
   replayBtn.css({ display: 'none' });
   $("#bird").css({ display: 'none' });
+  stopTrex();
 
 });
 
@@ -43,15 +45,15 @@ controller = {
     var key_state = (event.type == "keydown") ? true : false;
 
     switch (event.keyCode) {
-      case 37:
-        controller.left = key_state;
-        break;
+      // case 37:
+      //   controller.left = key_state;
+      //   break;
       case 38:
         controller.up = key_state;
         break;
-      case 39:
-        controller.right = key_state;
-        break;
+      // case 39:
+      //   controller.right = key_state;
+      //   break;
     }
 
   }
@@ -67,7 +69,7 @@ function newInterval() {
   }
 }
 
-imagesInterval = setInterval(newInterval, 90);
+// imagesInterval = setInterval(newInterval, 90);
 
 function stopTrex() {
   clearInterval(imagesInterval);
@@ -75,40 +77,47 @@ function stopTrex() {
 
 //LOOP
 loop = function () {
+  if(isMOving){
+    if (controller.up && TRex.jumping == false) {
 
-  if (controller.up && TRex.jumping == false) {
-
-    TRex.y_velocity -= 18;
-    TRex.jumping = true;
+      TRex.y_velocity -= 18;
+      TRex.jumping = true;
+    }
+  
+    TRex.y_velocity += 1.2;// gravity
+  
+    TRex.x += TRex.x_velocity;
+    TRex.y += TRex.y_velocity;
+  
+    // if rectangle is falling below line
+    if (TRex.y > 180 - 16 - 32) {
+  
+      TRex.jumping = false;
+      TRex.y = 180 - 16 - 32;
+      TRex.y_velocity = 0;
+  
+    }
+  
+    $("#trex-image").css({ "top": TRex.y - 15 })
+    window.requestAnimationFrame(loop);
   }
 
-  TRex.y_velocity += 1.2;// gravity
-
-  TRex.x += TRex.x_velocity;
-  TRex.y += TRex.y_velocity;
-
-  // if rectangle is falling below line
-  if (TRex.y > 180 - 16 - 32) {
-
-    TRex.jumping = false;
-    TRex.y = 180 - 16 - 32;
-    TRex.y_velocity = 0;
-
-  }
-
-  $("#trex-image").css({ "top": TRex.y - 15 })
-  window.requestAnimationFrame(loop);
+  
 }
 
 //ADD EVENT LISTENERS (UP & DOWN)
 window.addEventListener("keydown", controller.keyListener);
 window.addEventListener("keyup", controller.keyListener);
-window.requestAnimationFrame(loop);
+ window.requestAnimationFrame(loop);
 
 
 //start Button
 function startGame() {
+  isMOving=true;
+  window.requestAnimationFrame(loop);
   audio = new Audio('game-audio.mp3');
+  imagesInterval = setInterval(newInterval, 90);
+
   audio.addEventListener('ended', function () {
     this.currentTime = 0;
     this.play();
@@ -129,8 +138,8 @@ function startGame() {
 
 //replay game button
 function replay() {
+  isMOving = true;
   startGame();
-  imagesInterval = setInterval(newInterval, 90);
   replayBtn.fadeOut();
 
 }
@@ -167,6 +176,8 @@ function moveBird() {
         else
           $("#bird").css({ top: "0px" });
         if (collision(div1, $("#bird"))) {
+          $("#bird").css({display:'inline'});
+
           $("#bird").stop();
           $("#trees-image").stop();
           clearTimeout(birdTimeout);
@@ -265,12 +276,14 @@ function collision($div1, $div2) {
 
 //stop game
 function stop() {
-  $("#bird").css({ display: 'none' });
+ // $("#bird").css({ display: 'none' });
   audio.pause();
   replayBtn.fadeIn();
   clearInterval(scoreInterval);
   road.style.animation = "move 0s linear infinite";
+  isMOving=false ;
   stopTrex();
+ 
 }
 
 // Increase Speed
