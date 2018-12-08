@@ -31,13 +31,14 @@ div h2
 {
     visibility: visible;
     top: 10%;
-    display: inline;
+    display: block;
     text-align: center;
     padding: 10px;
     height: 30px;
     opacity: 0;
     z-index: 1;
     color: #535353;
+    text-align: center ;
     font-family: 'Times New Roman', Times, serif;
     font-style: italic;
 }
